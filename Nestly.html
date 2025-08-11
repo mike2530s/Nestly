@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nestly - Digital Real Estate Platform Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .slide-image:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+        }
+        
+        .nav-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .nav-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .nav-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        .timer-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+            font-size: 1.2rem;
+        }
+
+        .timer-warning {
+            background: rgba(255, 193, 7, 0.9) !important;
+            color: black !important;
+        }
+
+        .timer-danger {
+            background: rgba(220, 53, 69, 0.9) !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 flex items-center justify-center">
+
+    <!-- Timer Display -->
+    <div id="timer" class="timer-display">
+        2:30
+    </div>
+
+    <div class="presentation-container w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden card-hover">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill" style="width: 16.67%;"></div>
+        </div>
+        
+        <!-- Slide Counter -->
+        <div class="slide-counter absolute top-6 right-6 px-4 py-2 rounded-full text-sm font-medium text-white z-10">
+            <span id="current-slide-num">1</span> / <span id="total-slides">6</span>
+        </div>
+        
+        <!-- Slides Container -->
+        <div class="slides-container p-8 md:p-12 lg:p-16">
+            
+            <!-- Slide 1: Title & Introduction (25 seconds) -->
+            <section id="slide-1" class="slide active">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                        Nestly
+                    </h1>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-600 mb-4">
+                        Digital Platform for Property Rental Management
+                    </p>
+                    <p class="text-lg text-gray-500">
+                        Instituto Tecnológico Sanmiguelense • 2025
+                    </p>
+                </div>
+                <p class="text-xl leading-relaxed text-center mb-8 text-gray-700">
+                    We present a <strong>comprehensive digital platform</strong> that democratizes access to advanced technological tools in the real estate sector. Nestly <strong>eliminates technological barriers</strong> enabling small real estate agencies to compete with high-cost solutions through modern technologies like Angular, Laravel, and Docker.
+                </p>
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop&q=60" alt="Modern digital real estate platform" class="slide-image">
+            </section>
+
+            <!-- Slide 2: Problem Analysis (20 seconds) -->
+            <section id="slide-2" class="slide">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Real Estate Technology Gap</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-gray-700">
+                    <p class="text-xl">
+                        Real estate agencies, especially smaller ones, <strong>face significant barriers</strong> from existing high-cost platforms, confusing interfaces, and rigid functionality that limits their digital competitiveness.
+                    </p>
+                    <div class="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg">
+                        <h3 class="font-semibold text-red-800 mb-3">Critical Problems Identified:</h3>
+                        <ul class="space-y-2 text-red-700">
+                            <li>• <strong>High costs</strong> of current commercial systems</li>
+                            <li>• Non-intuitive and complex user interfaces</li>
+                            <li>• <strong>Restricted functionality</strong> without local adaptability</li>
+                            <li>• Lack of flexibility for specific business needs</li>
+                        </ul>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60" alt="Traditional real estate management problems" class="slide-image mt-8">
+            </section>
+
+            <!-- Slide 3: Technical Solution (25 seconds) -->
+            <section id="slide-3" class="slide">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Modern Technology Architecture</h2>
+                <p class="text-xl leading-relaxed mb-8 text-gray-700">
+                    Nestly implements a <strong>Single Page Application (SPA)</strong> with decoupled architecture, where Angular manages dynamic interfaces communicating with a Laravel RESTful API for optimized data operations.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-400">
+                        <h3 class="font-semibold text-purple-800 mb-3">Modern Frontend:</h3>
+                        <ul class="space-y-2 text-purple-700">
+                            <li>• <strong>Angular</strong> for dynamic and responsive interfaces</li>
+                            <li>• PrimeNG for advanced UI components</li>
+                            <li>• <strong>Responsive design</strong> for multi-device support</li>
+                            <li>• Optimized user experience architecture</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-400">
+                        <h3 class="font-semibold text-blue-800 mb-3">Robust Backend:</h3>
+                        <ul class="space-y-2 text-blue-700">
+                            <li>• Laravel Framework for secure RESTful API</li>
+                            <li>• Efficient database management systems</li>
+                            <li>• <strong>Docker</strong> for portability and deployment</li>
+                            <li>• Simplified scalability and maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60" alt="Modern software architecture" class="slide-image">
+            </section>
+
+            <!-- Slide 4: Development Methodology (20 seconds) -->
+            <section id="slide-4" class="slide">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Agile Development Methodology</h2>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-purple-600">Methodological Approach</h3>
+                        <div class="space-y-3">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <strong>Scrum Framework:</strong> Iterative and flexible development
+                            </div>
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <strong>Applied Research:</strong> Practical problem-solving approach
+                            </div>
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <strong>Deductive Method:</strong> Technology hypothesis validation
+                            </div>
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <strong>Tools:</strong> Trello, Figma, VS Code, Git/GitHub
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-blue-600">Target Population</h3>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <strong>Primary:</strong> Small and medium-sized real estate agencies
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <strong>Location:</strong> San Miguel de Allende region
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <strong>Sample:</strong> 3-5 agencies for pilot testing
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                                <strong>Approach:</strong> Participatory with continuous feedback
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=60" alt="Agile development methodology" class="slide-image">
+            </section>
+
+            <!-- Slide 5: Expected Impact (25 seconds) -->
+            <section id="slide-5" class="slide">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Expected Impact and Results</h2>
+                <p class="text-xl leading-relaxed mb-8 text-gray-700">
+                    Nestly will <strong>democratize access</strong> to advanced digital tools, enabling local real estate agencies to compete effectively through an accessible, intuitive, and low-cost platform solution.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200">
+                        <div class="text-4xl mb-4">🏢</div>
+                        <h3 class="font-semibold text-purple-800 mb-3">Real Estate Agencies</h3>
+                        <p class="text-purple-700">Significant improvement in management efficiency and competitive reach in the digital environment.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+                        <div class="text-4xl mb-4">💻</div>
+                        <h3 class="font-semibold text-blue-800 mb-3">Technology Platform</h3>
+                        <p class="text-blue-700">Robust, scalable platform with simplified maintenance using established technologies.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="font-semibold text-green-800 mb-3">Market Competitiveness</h3>
+                        <p class="text-green-700">Elimination of entry barriers enabling equal competitive conditions in the market.</p>
+                    </div>
+                </div>
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
+                    <p class="text-lg font-medium text-yellow-800">
+                        🚀 Nestly will transform the local real estate sector through accessible and sustainable technological innovation.
+                    </p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60" alt="Digital impact in real estate sector" class="slide-image mt-8">
+            </section>
+
+            <!-- Slide 6: Implementation Timeline (15 seconds) -->
+            <section id="slide-6" class="slide">
+                <h2 class="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Implementation Timeline</h2>
+                <div class="space-y-6 text-lg leading-relaxed text-gray-700 mb-8">
+                    <p class="text-xl">
+                        The Nestly project <strong>follows a 16-week development cycle</strong> with agile Scrum methodology, ensuring incremental deliveries and continuous feedback from the target market.
+                    </p>
+                    <div class="bg-purple-50 p-6 rounded-xl border border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-3">Project Phases:</h3>
+                        <div class="grid md:grid-cols-2 gap-4 text-purple-700">
+                            <div>
+                                <p><strong>Weeks 1-2:</strong> Research and planning phase</p>
+                                <p><strong>Weeks 3-4:</strong> UI/UX design with Figma</p>
+                                <p><strong>Weeks 5-8:</strong> Backend development Laravel API</p>
+                            </div>
+                            <div>
+                                <p><strong>Weeks 9-12:</strong> Frontend development Angular</p>
+                                <p><strong>Weeks 13-14:</strong> Integration and testing</p>
+                                <p><strong>Weeks 15-16:</strong> Deployment and documentation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl border border-green-200">
+                        <p class="text-green-800 font-medium text-center">
+                            🎯 <strong>Mission accomplished:</strong> Complete, functional and accessible digital platform that revolutionizes local real estate management.
+                        </p>
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&auto=format&fit=crop&q=60" alt="Software development timeline" class="slide-image">
+            </section>
+
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="flex justify-between items-center p-8 bg-gray-50">
+            <button id="prev-btn" class="nav-button bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg flex items-center gap-2" disabled>
+                ← Previous
+            </button>
+            <div class="text-gray-500 font-medium">
+                Use arrow keys or spacebar to navigate
+            </div>
+            <button id="next-btn" class="nav-button bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg flex items-center gap-2">
+                Next →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Presentation elements
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+        const currentSlideNum = document.getElementById('current-slide-num');
+        const totalSlides = document.getElementById('total-slides');
+        const timerDisplay = document.getElementById('timer');
+        
+        let currentSlide = 0;
+        let startTime = Date.now();
+        let totalTime = 150000; // 2 minutes 30 seconds in milliseconds
+        let timerInterval;
+
+        // Initialize presentation
+        totalSlides.textContent = slides.length;
+
+        // Timer functionality
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, totalTime - elapsed);
+                
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                
+                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Change timer color based on remaining time
+                timerDisplay.className = 'timer-display';
+                if (remaining <= 30000) { // Last 30 seconds
+                    timerDisplay.classList.add('timer-danger');
+                } else if (remaining <= 60000) { // Last minute
+                    timerDisplay.classList.add('timer-warning');
+                }
+                
+                if (remaining === 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "TIME!";
+                    timerDisplay.classList.add('timer-danger');
+                }
+            }, 1000);
+        }
+
+        // Start timer when presentation begins
+        startTimer();
+
+        // Function to show current slide
+        function showSlide(index) {
+            // Remove active class from all slides
+            slides.forEach((slide) => {
+                slide.classList.remove('active');
+            });
+            
+            // Show current slide
+            slides[index].classList.add('active');
+            
+            // Update counter
+            currentSlideNum.textContent = index + 1;
+            
+            // Update progress bar
+            const progressPercentage = ((index + 1) / slides.length) * 100;
+            progressFill.style.width = progressPercentage + '%';
+            
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+        }
+
+        // Navigation functions
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Auto-advance slides (optional - can be enabled for practice)
+        function autoAdvance() {
+            // Slide durations in seconds: [25, 20, 25, 20, 25, 15]
+            const slideDurations = [25000, 20000, 25000, 20000, 25000, 15000];
+            let slideStartTime = Date.now();
+            
+            const autoInterval = setInterval(() => {
+                const slideElapsed = Date.now() - slideStartTime;
+                if (slideElapsed >= slideDurations[currentSlide]) {
+                    if (currentSlide < slides.length - 1) {
+                        nextSlide();
+                        slideStartTime = Date.now();
+                    } else {
+                        clearInterval(autoInterval);
+                    }
+                }
+            }, 1000);
+        }
+
+        // Uncomment the next line to enable auto-advance
+        // autoAdvance();
+
+        // Event listeners for buttons
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    currentSlide = 0;
+                    showSlide(currentSlide);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    currentSlide = slides.length - 1;
+                    showSlide(currentSlide);
+                    break;
+                case 'r':
+                case 'R':
+                    // Reset timer
+                    clearInterval(timerInterval);
+                    startTime = Date.now();
+                    startTimer();
+                    break;
+            }
+        });
+
+        // Touch navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize first slide
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
